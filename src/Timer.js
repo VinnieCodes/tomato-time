@@ -76,13 +76,27 @@ function Timer() {
           rotation: 0,
           strokeLinecap: "round",
           textColor: "#fff",
-          pathColor: red,
+          pathColor: mode === "work" ? red : green,
           trailColor: "rgba(255, 255, 255, .2)",
         })}
       />
 
       <div style={{ marginTop: "20px" }}>
-        {isPaused ? <PlayButton /> : <PauseButton />}
+        {isPaused ? (
+          <PlayButton
+            onClick={() => {
+              setIsPaused(false);
+              isPausedRef.current = false;
+            }}
+          />
+        ) : (
+          <PauseButton
+            onClick={() => {
+              setIsPaused(true);
+              isPausedRef.current = true;
+            }}
+          />
+        )}
       </div>
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />

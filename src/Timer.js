@@ -12,8 +12,8 @@ const green = "#4aec8c";
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
 
-  const [isPaused, setIsPaused] = useState(false);
-  const [mode, setMode] = useState("break"); // work, break, null
+  const [isPaused, setIsPaused] = useState(true);
+  const [mode, setMode] = useState("work"); // work, break, null
   const [secondsLeft, setSecondsLeft] = useState(0);
 
   const secondsLeftRef = useRef(secondsLeft);
@@ -38,7 +38,9 @@ function Timer() {
   }
 
   function initTimer() {
-    setSecondsLeft(settingsInfo.workMinutes * 60);
+    const workSeconds = settingsInfo.workMinutes * 60;
+    setSecondsLeft(workSeconds);
+    secondsLeftRef.current = workSeconds;
   }
 
   useEffect(() => {
@@ -52,7 +54,7 @@ function Timer() {
       }
 
       tick();
-    }, 1000);
+    }, 10);
 
     return () => clearInterval(interval);
   }, [settingsInfo]);

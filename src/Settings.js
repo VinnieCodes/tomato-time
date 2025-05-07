@@ -26,7 +26,7 @@ function Settings() {
         value={settingsInfo.breakMinutes}
         onChange={(newValue) => settingsInfo.setBreakMinutes(newValue)}
         min={1}
-        max={120}
+        max={24}
       />
 
       <div style={{textAlign: 'center', marginTop: '20px'}}>

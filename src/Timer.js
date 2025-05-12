@@ -5,9 +5,10 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
+import {workCompleteSound, breakCompleteSound, clickSound} from "./SoundEffects";
 
-const red = "#f54e4e";
-const green = "#4aec8c";
+const blue = "#4772fa";
+const green = "#1bddac";
 
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
@@ -22,6 +23,7 @@ function Timer() {
 
   function switchMode() {
     const nextMode = modeRef.current === "work" ? "break" : "work";
+    nextMode === 'work' ? breakCompleteSound() : workCompleteSound();
     const nextSeconds =
       (nextMode === "work"
         ? settingsInfo.workMinutes
@@ -54,7 +56,7 @@ function Timer() {
       }
 
       tick();
-    }, 10);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [settingsInfo]);
@@ -78,7 +80,7 @@ function Timer() {
           rotation: 0,
           strokeLinecap: "round",
           textColor: "#fff",
-          pathColor: mode === "work" ? red : green,
+          pathColor: mode === "work" ? blue : green,
           trailColor: "rgba(255, 255, 255, .2)",
         })}
       />
@@ -87,16 +89,18 @@ function Timer() {
         {isPaused ? (
           <PlayButton
             onClick={() => {
+              clickSound();
               setIsPaused(false);
               isPausedRef.current = false;
             }}
           />
         ) : (
           <PauseButton
-            onClick={() => {
-              setIsPaused(true);
-              isPausedRef.current = true;
-            }}
+              onClick={() => {
+                clickSound();
+                setIsPaused(true);
+                isPausedRef.current = true;
+              }}
           />
         )}
       </div>

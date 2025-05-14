@@ -5,7 +5,9 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
-import {workCompleteSound, breakCompleteSound, clickSound} from "./SoundEffects";
+import { workCompleteSound, breakCompleteSound, clickSound } from "./SoundEffects";
+import TaskForm from "./TaskForm";
+import Task from "./Task";
 
 const blue = "#4772fa";
 const green = "#1bddac";
@@ -67,10 +69,17 @@ function Timer() {
       : settingsInfo.breakMinutes * 60;
 
   const percentage = Math.round((secondsLeft / totalSeconds) * 100);
-
   const minutes = Math.floor(secondsLeft / 60);
   let seconds = secondsLeft % 60;
   if (seconds < 10) seconds = "0" + seconds;
+
+  // tasks
+  const [tasks, setTasks] = useState([]);
+  function addTask(name) {
+    setTasks(prev => {
+      return [...prev, { name: name, done: false }];
+    });
+  }
   return (
     <div>
       <CircularProgressbar
@@ -96,16 +105,22 @@ function Timer() {
           />
         ) : (
           <PauseButton
-              onClick={() => {
-                clickSound();
-                setIsPaused(true);
-                isPausedRef.current = true;
-              }}
+            onClick={() => {
+              clickSound();
+              setIsPaused(true);
+              isPausedRef.current = true;
+            }}
           />
         )}
       </div>
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
+      </div>
+      <div>
+        <TaskForm onAdd={addTask} />
+        {tasks.map(task => (
+          <Task {...task} />
+        ))}
       </div>
     </div>
   );

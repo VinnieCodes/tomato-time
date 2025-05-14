@@ -22,21 +22,21 @@ button {
   display: inline-block;
   width: 100px;
   cursor: pointer;
-  transition: color .2s ease;
+  transition: color 0.2s ease;
 }
 
 button:hover {
-  color: rgba(255, 255, 255, .9);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 button.with-text {
   width: auto;
   background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 100px;
   padding: 10px 20px;
   font-size: 1.4rem;
   line-height: 36px;
-  transition: background-color .2s ease;
+  transition: background-color 0.2s ease;
 }
 
 button.with-text svg {
@@ -47,9 +47,48 @@ button.with-text svg {
 
 button.with-text:hover {
   background-color: rgba(255, 255, 255, 0.15);
-
 }
 
 label {
   display: block;
+}
+
+form {
+  border: 3px solid #30313d;
+  border-radius: 100px;
+  margin-top: 25px;
+  padding: 10px;
+  display: flex;
+}
+
+form input[type="text"] {
+  background: none;
+  color: white;
+  border: 0;
+  padding: 0 8px;
+  display: block;
+  width: 100%;
+}
+
+form button {
+  background-color: var(--blue);
+  border: 0;
+  border-radius: 100px;
+  cursor: pointer;
+  width: 40px;
+  height: 30px;
+}
+
+div.task {
+  background-color: #3131316c;
+  border-radius: 100px;
+  padding: 5px 9px;
+  margin-top: 5px;
+  display: flex;
+}
+
+
+div.task svg {
+  height: 20px;
+  margin-right: 4px;
 }

@@ -5,7 +5,11 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
-import { workCompleteSound, breakCompleteSound, clickSound } from "./SoundEffects";
+import {
+  workCompleteSound,
+  breakCompleteSound,
+  clickSound,
+} from "./SoundEffects";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
 
@@ -25,7 +29,7 @@ function Timer() {
 
   function switchMode() {
     const nextMode = modeRef.current === "work" ? "break" : "work";
-    nextMode === 'work' ? breakCompleteSound() : workCompleteSound();
+    nextMode === "work" ? breakCompleteSound() : workCompleteSound();
     const nextSeconds =
       (nextMode === "work"
         ? settingsInfo.workMinutes
@@ -75,11 +79,31 @@ function Timer() {
 
   // tasks
   const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    if (tasks.length === 0) return;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  useEffect(() => {
+    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    setTasks(tasks);
+  }, []);
+
   function addTask(name) {
-    setTasks(prev => {
+    setTasks((prev) => {
       return [...prev, { name: name, done: false }];
     });
   }
+
+  function updateTaskDone(taskIndex, newDone) {
+    setTasks(prev => {
+      const newTasks = [...prev];
+      newTasks[taskIndex].done = newDone;
+      return newTasks;
+    })
+  }
+
   return (
     <div>
       <CircularProgressbar
@@ -118,8 +142,8 @@ function Timer() {
       </div>
       <div>
         <TaskForm onAdd={addTask} />
-        {tasks.map(task => (
-          <Task {...task} />
+        {tasks.map((task, index) => (
+          <Task {...task} onToggle={done => updateTaskDone(index, done)} />
         ))}
       </div>
     </div>

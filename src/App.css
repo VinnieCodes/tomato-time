@@ -80,7 +80,7 @@ form button {
 }
 
 div.task {
-  background-color: #3131316c;
+  background-color: #313131;
   border-radius: 100px;
   padding: 5px 9px;
   margin-top: 5px;
@@ -90,5 +90,6 @@ div.task {
 
 div.task svg {
   height: 20px;
-  margin-right: 4px;
+  margin-right: 10px;
+  cursor: pointer;
 }

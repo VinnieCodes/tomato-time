@@ -68,6 +68,8 @@ form input[type="text"] {
   padding: 0 8px;
   display: block;
   width: 100%;
+  outline: none;
+  font-size: 1rem;
 }
 
 form button {
@@ -127,6 +129,15 @@ div.task.done span:before{
   width: 100%;
 }
 
-.list-icons {
-  width: 30px;
+div.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+button.trash {
+  width: max-content;
+  background: none;
+  display: flex;
+  cursor: pointer;
+  padding: 0px;
 }

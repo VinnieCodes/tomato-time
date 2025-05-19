@@ -96,6 +96,12 @@ function Timer() {
     });
   }
 
+  function removeTask(indexToRemove) {
+    setTasks(prev => {
+      return prev.filter((taskObject, index) =>  index !== indexToRemove);
+    })
+  }
+
   function updateTaskDone(taskIndex, newDone) {
     setTasks((prev) => {
       const newTasks = [...prev];
@@ -162,7 +168,8 @@ function Timer() {
         <h2>{getMessage()}</h2>
         <TaskForm onAdd={addTask} />
         {tasks.map((task, index) => (
-          <Task {...task} onToggle={(done) => updateTaskDone(index, done)} />
+
+          <Task {...task} onTrash={() => removeTask(index) } onToggle={(done) => updateTaskDone(index, done)} />
         ))}
       </div>
     </div>

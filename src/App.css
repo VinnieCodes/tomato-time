@@ -86,6 +86,7 @@ div.task {
   padding: 5px 9px;
   margin-top: 5px;
   display: flex;
+  align-items: center;
   transition: opacity 0.3s;
 }
 
@@ -98,6 +99,13 @@ div.task svg {
 
 div.task.done {
   opacity: 0.5;
+}
+
+div.task-name {
+  flex-grow: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 div.task span{
@@ -117,4 +125,8 @@ div.task span:before {
 
 div.task.done span:before{
   width: 100%;
+}
+
+.list-icons {
+  width: 30px;
 }

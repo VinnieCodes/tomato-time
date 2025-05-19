@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function Checkbox({checked = false, onClick}) {
   return (
     <div onClick={onClick}>

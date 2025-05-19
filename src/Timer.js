@@ -97,11 +97,26 @@ function Timer() {
   }
 
   function updateTaskDone(taskIndex, newDone) {
-    setTasks(prev => {
+    setTasks((prev) => {
       const newTasks = [...prev];
       newTasks[taskIndex].done = newDone;
       return newTasks;
-    })
+    });
+  }
+  
+  const numberComplete = tasks.filter((t) => t.done).length;
+  const numberTotal = tasks.length;
+
+  function getMessage() {
+    const percentage = numberComplete / numberTotal * 100;
+    if (percentage === 0) {
+      return 'Do at least one!'
+    }
+    if (percentage === 100) {
+      return 'Great job today!🪅'
+    }
+
+    return 'Keep it going 🦾';
   }
 
   return (
@@ -141,9 +156,13 @@ function Timer() {
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
       </div>
       <div>
+        <h1>
+          {numberComplete}/{numberTotal} Complete
+        </h1>
+        <h2>{getMessage()}</h2>
         <TaskForm onAdd={addTask} />
         {tasks.map((task, index) => (
-          <Task {...task} onToggle={done => updateTaskDone(index, done)} />
+          <Task {...task} onToggle={(done) => updateTaskDone(index, done)} />
         ))}
       </div>
     </div>

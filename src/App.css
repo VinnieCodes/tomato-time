@@ -22,7 +22,7 @@ button {
   display: inline-block;
   width: 100px;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
 
 button:hover {
@@ -36,7 +36,7 @@ button.with-text {
   padding: 10px 20px;
   font-size: 1.4rem;
   line-height: 36px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s;
 }
 
 button.with-text svg {
@@ -71,7 +71,8 @@ form input[type="text"] {
 }
 
 form button {
-  background-color: var(--blue);
+  color: black;
+  background-color: rgba(255, 255, 255, 0.6);
   border: 0;
   border-radius: 100px;
   cursor: pointer;
@@ -85,11 +86,35 @@ div.task {
   padding: 5px 9px;
   margin-top: 5px;
   display: flex;
+  transition: opacity 0.3s;
 }
-
 
 div.task svg {
   height: 20px;
   margin-right: 10px;
   cursor: pointer;
+  fill: rgba(255, 255, 255, 0.6);
+}
+
+div.task.done {
+  opacity: 0.5;
+}
+
+div.task span{
+  position: relative;
+}
+
+div.task span:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 1px;
+  background-color: white;
+  position: absolute;
+  top: 11px;
+  transition: width .4s;
+}
+
+div.task.done span:before{
+  width: 100%;
 }

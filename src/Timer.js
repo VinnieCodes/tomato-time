@@ -114,14 +114,16 @@ function Timer() {
   const numberTotal = tasks.length;
 
   function getMessage() {
+    if (numberTotal === 0) {
+      return "Make a task!";
+    }
     const percentage = numberComplete / numberTotal * 100;
     if (percentage === 0) {
       return 'Do at least one!'
     }
     if (percentage === 100) {
       return 'Great job today!🪅'
-    }
-
+    }      
     return 'Keep it going 🦾';
   }
 

@@ -97,9 +97,9 @@ function Timer() {
   }
 
   function removeTask(indexToRemove) {
-    setTasks(prev => {
-      return prev.filter((taskObject, index) =>  index !== indexToRemove);
-    })
+    setTasks((prev) => {
+      return prev.filter((taskObject, index) => index !== indexToRemove);
+    });
   }
 
   function updateTaskDone(taskIndex, newDone) {
@@ -109,7 +109,7 @@ function Timer() {
       return newTasks;
     });
   }
-  
+
   const numberComplete = tasks.filter((t) => t.done).length;
   const numberTotal = tasks.length;
 
@@ -117,14 +117,22 @@ function Timer() {
     if (numberTotal === 0) {
       return "Make a task!";
     }
-    const percentage = numberComplete / numberTotal * 100;
+    const percentage = (numberComplete / numberTotal) * 100;
     if (percentage === 0) {
-      return 'Do at least one!'
+      return "Do at least one!";
     }
     if (percentage === 100) {
-      return 'Great job today!🪅'
-    }      
-    return 'Keep it going 🦾';
+      return "Great job today!⚡";
+    }
+    return "Keep it going 🦾";
+  }
+
+  function renameTask(index, newName) {
+    setTasks((prev) => {
+      const newTasks = [...prev];
+      newTasks[index].name = newName;
+      return newTasks;
+    });
   }
 
   return (
@@ -170,8 +178,12 @@ function Timer() {
         <h2>{getMessage()}</h2>
         <TaskForm onAdd={addTask} />
         {tasks.map((task, index) => (
-
-          <Task {...task} onTrash={() => removeTask(index) } onToggle={(done) => updateTaskDone(index, done)} />
+          <Task
+            {...task}
+            onRename={(newName) => renameTask(index, newName)}
+            onTrash={() => removeTask(index)}
+            onToggle={(done) => updateTaskDone(index, done)}
+          />
         ))}
       </div>
     </div>

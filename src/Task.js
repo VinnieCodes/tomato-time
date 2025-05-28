@@ -1,8 +1,21 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Checkbox from "./Checkbox";
 
 function Task({ name, done, onToggle, onTrash, onRename }) {
   const [editMode, setEditMode] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (editMode && inputRef.current) {
+      inputRef.current.focus();
+      // Move cursor to end
+      inputRef.current.setSelectionRange(
+        inputRef.current.value.length,
+        inputRef.current.value.length
+      );
+    }
+  }, [editMode]);
+
   return (
     <div className={"task " + (done ? "done" : "")}>
       <Checkbox checked={done} onClick={() => onToggle(!done)} />
@@ -19,9 +32,11 @@ function Task({ name, done, onToggle, onTrash, onRename }) {
           }}
         >
           <input
+            ref={inputRef}
             type="text"
             value={name}
             onChange={(ev) => onRename(ev.target.value)}
+            onBlur={() => setEditMode(false)}
           />
         </form>
       )}

@@ -77,6 +77,13 @@ function Timer() {
   let seconds = secondsLeft % 60;
   if (seconds < 10) seconds = "0" + seconds;
 
+  // Update document title with timer
+  useEffect(() => {
+    document.title = `${minutes}:${seconds} • ${
+      mode === "work" ? "Focus" : "Relax"
+    } `;
+  }, [minutes, seconds, mode]);
+
   // tasks
   const [tasks, setTasks] = useState([]);
 

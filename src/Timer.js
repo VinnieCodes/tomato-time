@@ -91,6 +91,7 @@ function Timer() {
   }, []);
 
   function addTask(name) {
+    if (!name.trim()) return;
     setTasks((prev) => {
       return [...prev, { name: name, done: false }];
     });

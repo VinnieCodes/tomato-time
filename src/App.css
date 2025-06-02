@@ -84,7 +84,7 @@ form button {
 
 div.task {
   background-color: #313131;
-  border-radius: 100px;
+  border-radius: 16px;
   padding: 5px 9px;
   margin-top: 5px;
   display: flex;

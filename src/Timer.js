@@ -20,24 +20,50 @@ function Timer() {
   const settingsInfo = useContext(SettingsContext);
 
   const [isPaused, setIsPaused] = useState(true);
-  const [mode, setMode] = useState("work"); // work, break, null
+  const [mode, setMode] = useState("work"); // work, break, longBreak
   const [secondsLeft, setSecondsLeft] = useState(0);
+  const [pomoCount, setPomoCount] = useState(0); // Track completed work sessions
 
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
+  const pomoCountRef = useRef(pomoCount);
 
   function switchMode() {
-    const nextMode = modeRef.current === "work" ? "break" : "work";
-    nextMode === "work" ? breakCompleteSound() : workCompleteSound();
-    const nextSeconds =
-      (nextMode === "work"
-        ? settingsInfo.workMinutes
-        : settingsInfo.breakMinutes) * 60;
-    setMode(nextMode);
-    modeRef.current = nextMode;
-    setSecondsLeft(nextSeconds);
-    secondsLeftRef.current = nextSeconds;
+    if (modeRef.current === "work") {
+      const nextPomoCount = pomoCountRef.current + 1;
+      if (nextPomoCount % 4 === 0) {
+        setMode("longBreak");
+        modeRef.current = "longBreak";
+        setSecondsLeft(settingsInfo.longBreakMinutes * 60);
+        secondsLeftRef.current = settingsInfo.longBreakMinutes * 60;
+        setPomoCount(nextPomoCount);
+        pomoCountRef.current = nextPomoCount;
+        workCompleteSound();
+      } else {
+        setMode("break");
+        modeRef.current = "break";
+        setSecondsLeft(settingsInfo.breakMinutes * 60);
+        secondsLeftRef.current = settingsInfo.breakMinutes * 60;
+        setPomoCount(nextPomoCount);
+        pomoCountRef.current = nextPomoCount;
+        workCompleteSound();
+      }
+    } else if (modeRef.current === "longBreak") {
+      setMode("work");
+      modeRef.current = "work";
+      setSecondsLeft(settingsInfo.workMinutes * 60);
+      secondsLeftRef.current = settingsInfo.workMinutes * 60;
+      setPomoCount(0);
+      pomoCountRef.current = 0;
+      breakCompleteSound();
+    } else {
+      setMode("work");
+      modeRef.current = "work";
+      setSecondsLeft(settingsInfo.workMinutes * 60);
+      secondsLeftRef.current = settingsInfo.workMinutes * 60;
+      breakCompleteSound();
+    }
   }
 
   function tick() {
@@ -46,9 +72,12 @@ function Timer() {
   }
 
   function initTimer() {
-    const workSeconds = settingsInfo.workMinutes * 60;
-    setSecondsLeft(workSeconds);
-    secondsLeftRef.current = workSeconds;
+    setMode("work");
+    modeRef.current = "work";
+    setSecondsLeft(settingsInfo.workMinutes * 60);
+    secondsLeftRef.current = settingsInfo.workMinutes * 60;
+    setPomoCount(0);
+    pomoCountRef.current = 0;
   }
 
   useEffect(() => {
@@ -62,7 +91,7 @@ function Timer() {
       }
 
       tick();
-    }, 100);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [settingsInfo]);
@@ -70,7 +99,9 @@ function Timer() {
   const totalSeconds =
     mode === "work"
       ? settingsInfo.workMinutes * 60
-      : settingsInfo.breakMinutes * 60;
+      : mode === "break"
+      ? settingsInfo.breakMinutes * 60
+      : settingsInfo.longBreakMinutes * 60;
 
   const percentage = Math.round((secondsLeft / totalSeconds) * 100);
   const minutes = Math.floor(secondsLeft / 60);
@@ -82,21 +113,21 @@ function Timer() {
     document.title = `${minutes}:${seconds} • ${
       mode === "work" ? "Focus" : "Relax"
     } `;
-      const setFavicon = (iconPath) => {
-        let link = document.querySelector("link[rel~='icon']");
-        if (!link) {
-          link = document.createElement("link");
-          link.rel = "icon";
-          document.head.appendChild(link);
-        }
-        link.href = iconPath;
-      };
-
-      if (mode === "work") {
-        setFavicon("/favicon-work.ico");
-      } else {
-        setFavicon("/favicon-break.ico");
+    const setFavicon = (iconPath) => {
+      let link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
       }
+      link.href = iconPath;
+    };
+
+    if (mode === "work") {
+      setFavicon("/favicon-work.ico");
+    } else {
+      setFavicon("/favicon-break.ico");
+    }
   }, [minutes, seconds, mode]);
 
   // tasks

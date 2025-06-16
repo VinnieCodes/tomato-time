@@ -26,10 +26,20 @@ function Settings() {
         value={settingsInfo.breakMinutes}
         onChange={(newValue) => settingsInfo.setBreakMinutes(newValue)}
         min={1}
-        max={24}
+        max={25}
+      />
+      <label>Long Break: {settingsInfo.longBreakMinutes} Minutes</label>
+      <ReactSlider
+        className={"slider green"}
+        thumbClassName={"thumb"}
+        trackClassName={"track"}
+        value={settingsInfo.longBreakMinutes}
+        onChange={(newValue) => settingsInfo.setLongBreakMinutes(newValue)}
+        min={3}
+        max={100}
       />
 
-      <div style={{textAlign: 'center', marginTop: '20px'}}>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
         <BackButton onClick={() => settingsInfo.setShowSettings(false)} />
       </div>
     </div>

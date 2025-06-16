@@ -1,5 +1,29 @@
-import react from 'react';
+import { createContext, useState } from "react";
 
-const SettingsContext = react.createContext({});
+const SettingsContext = createContext({});
+
+export function SettingsProvider({ children }) {
+  const [workMinutes, setWorkMinutes] = useState(25);
+  const [breakMinutes, setBreakMinutes] = useState(5);
+  const [longBreakMinutes, setLongBreakMinutes] = useState(15);
+  const [showSettings, setShowSettings] = useState(false);
+
+  return (
+    <SettingsContext.Provider
+      value={{
+        workMinutes,
+        setWorkMinutes,
+        breakMinutes,
+        setBreakMinutes,
+        longBreakMinutes,
+        setLongBreakMinutes,
+        showSettings,
+        setShowSettings,
+      }}
+    >
+      {children}
+    </SettingsContext.Provider>
+  );
+}
 
 export default SettingsContext;

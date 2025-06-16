@@ -82,6 +82,21 @@ function Timer() {
     document.title = `${minutes}:${seconds} • ${
       mode === "work" ? "Focus" : "Relax"
     } `;
+      const setFavicon = (iconPath) => {
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement("link");
+          link.rel = "icon";
+          document.head.appendChild(link);
+        }
+        link.href = iconPath;
+      };
+
+      if (mode === "work") {
+        setFavicon("/favicon-work.ico");
+      } else {
+        setFavicon("/favicon-break.ico");
+      }
   }, [minutes, seconds, mode]);
 
   // tasks

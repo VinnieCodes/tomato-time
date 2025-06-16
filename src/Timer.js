@@ -24,6 +24,11 @@ function Timer() {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [pomoCount, setPomoCount] = useState(0); // Track completed work sessions
   const [waitingForAdvance, setWaitingForAdvance] = useState(false);
+  const [totalFocusMinutes, setTotalFocusMinutes] = useState(() => {
+    const stored = localStorage.getItem("totalFocusMinutes");
+    return stored ? parseInt(stored, 10) : 0;
+  });
+  const [lastPausedSeconds, setLastPausedSeconds] = useState(null);
 
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
@@ -214,8 +219,49 @@ function Timer() {
     });
   }
 
+  // Track last minute mark for focus update
+  const [lastFocusMinute, setLastFocusMinute] = useState(null);
+
+  useEffect(() => {
+    // Only update in work mode, not paused, and not waiting for advance
+    if (mode === "work" && !isPaused && !waitingForAdvance) {
+      const currentMinute = Math.floor(
+        (settingsInfo.workMinutes * 60 - secondsLeft) / 60
+      );
+      if (lastFocusMinute === null) {
+        setLastFocusMinute(currentMinute);
+      } else if (currentMinute > lastFocusMinute) {
+        const minutesToAdd = currentMinute - lastFocusMinute;
+        if (minutesToAdd > 0) {
+          const newTotal = totalFocusMinutes + minutesToAdd;
+          setTotalFocusMinutes(newTotal);
+          localStorage.setItem("totalFocusMinutes", newTotal);
+          setLastFocusMinute(currentMinute);
+        }
+      }
+    }
+    // Reset lastFocusMinute when mode changes or timer is paused
+    if (isPaused || mode !== "work" || waitingForAdvance) {
+      setLastFocusMinute(null);
+    }
+    // eslint-disable-next-line
+  }, [secondsLeft, isPaused, mode, waitingForAdvance]);
+
   return (
     <div>
+      <div
+        style={{
+          position: "absolute",
+          top: 10,
+          left: 10,
+          color: "#fff",
+          fontWeight: "bold",
+          fontSize: "1.1em",
+          zIndex: 10,
+        }}
+      >
+        Total Focus Time: {totalFocusMinutes} minutes
+      </div>
       <CircularProgressbar
         value={percentage}
         text={minutes + ":" + seconds}

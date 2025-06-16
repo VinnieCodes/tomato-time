@@ -7,6 +7,7 @@ export function SettingsProvider({ children }) {
   const [breakMinutes, setBreakMinutes] = useState(5);
   const [longBreakMinutes, setLongBreakMinutes] = useState(15);
   const [showSettings, setShowSettings] = useState(false);
+  const [manualAdvance, setManualAdvance] = useState(false);
 
   return (
     <SettingsContext.Provider
@@ -19,6 +20,8 @@ export function SettingsProvider({ children }) {
         setLongBreakMinutes,
         showSettings,
         setShowSettings,
+        manualAdvance,
+        setManualAdvance,
       }}
     >
       {children}

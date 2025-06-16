@@ -23,6 +23,7 @@ function Timer() {
   const [mode, setMode] = useState("work"); // work, break, longBreak
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [pomoCount, setPomoCount] = useState(0); // Track completed work sessions
+  const [waitingForAdvance, setWaitingForAdvance] = useState(false);
 
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
@@ -39,7 +40,6 @@ function Timer() {
         secondsLeftRef.current = settingsInfo.longBreakMinutes * 60;
         setPomoCount(nextPomoCount);
         pomoCountRef.current = nextPomoCount;
-        workCompleteSound();
       } else {
         setMode("break");
         modeRef.current = "break";
@@ -56,14 +56,13 @@ function Timer() {
       secondsLeftRef.current = settingsInfo.workMinutes * 60;
       setPomoCount(0);
       pomoCountRef.current = 0;
-      breakCompleteSound();
     } else {
       setMode("work");
       modeRef.current = "work";
       setSecondsLeft(settingsInfo.workMinutes * 60);
       secondsLeftRef.current = settingsInfo.workMinutes * 60;
-      breakCompleteSound();
     }
+    setWaitingForAdvance(false); // reset waiting state on mode switch
   }
 
   function tick() {
@@ -80,16 +79,43 @@ function Timer() {
     pomoCountRef.current = 0;
   }
 
+  function handleNext() {
+    switchMode();
+    setIsPaused(false);
+    isPausedRef.current = false;
+    setWaitingForAdvance(false);
+  }
+
+  function handleManualAdvance() {
+    switchMode();
+    setIsPaused(false);
+    isPausedRef.current = false;
+    setWaitingForAdvance(false);
+  }
+
   useEffect(() => {
     initTimer();
     const interval = setInterval(() => {
       if (isPausedRef.current) {
         return;
       }
+      // Play sound when timer is at 1 second left (about to hit 0)
+      if (secondsLeftRef.current === 1) {
+        if (modeRef.current === "work") {
+          workCompleteSound();
+        } else {
+          breakCompleteSound();
+        }
+      }
       if (secondsLeftRef.current === 0) {
+        if (settingsInfo.manualAdvance) {
+          setWaitingForAdvance(true);
+          setIsPaused(true);
+          isPausedRef.current = true;
+          return;
+        }
         return switchMode();
       }
-
       tick();
     }, 50);
 
@@ -202,9 +228,15 @@ function Timer() {
           trailColor: "rgba(255, 255, 255, .2)",
         })}
       />
-
       <div style={{ marginTop: "20px" }}>
-        {isPaused ? (
+        {waitingForAdvance ? (
+          <PlayButton
+            onClick={() => {
+              clickSound();
+              handleManualAdvance();
+            }}
+          />
+        ) : isPaused ? (
           <PlayButton
             onClick={() => {
               clickSound();

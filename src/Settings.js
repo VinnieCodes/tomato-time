@@ -3,6 +3,7 @@ import "./slider.css";
 import { useContext } from "react";
 import SettingsContext from "./SettingsContext";
 import BackButton from "./BackButton";
+import Switch from "react-switch"; // Add this import
 
 function Settings() {
   const settingsInfo = useContext(SettingsContext);
@@ -39,6 +40,16 @@ function Settings() {
         max={100}
       />
 
+      <div style={{ margin: "20px 0" }}>
+        <label style={{ marginRight: "12px" }}>Manual Advance</label>
+        <Switch
+          onChange={settingsInfo.setManualAdvance}
+          checked={settingsInfo.manualAdvance}
+          onColor="#4772fa"
+          uncheckedIcon={false}
+          checkedIcon={false}
+        />
+      </div>
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <BackButton onClick={() => settingsInfo.setShowSettings(false)} />
       </div>

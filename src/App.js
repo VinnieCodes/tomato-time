@@ -11,6 +11,7 @@ function App() {
   const [longBreakMinutes, setLongBreakMinutes] = useState(15);
   const [pomoCount, setPomoCount] = useState(0);
   const [mode, setMode] = useState("work"); // "work", "break", "longBreak"
+  const [manualAdvance, setManualAdvance] = useState(true);
 
   let minutes;
   if (mode === "work") {
@@ -50,6 +51,8 @@ function App() {
           setBreakMinutes,
           longBreakMinutes,
           setLongBreakMinutes,
+          manualAdvance,
+          setManualAdvance,
         }}
       >
         {showSettings ? (

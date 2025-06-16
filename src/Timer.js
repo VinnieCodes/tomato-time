@@ -47,7 +47,6 @@ function Timer() {
         secondsLeftRef.current = settingsInfo.breakMinutes * 60;
         setPomoCount(nextPomoCount);
         pomoCountRef.current = nextPomoCount;
-        workCompleteSound();
       }
     } else if (modeRef.current === "longBreak") {
       setMode("work");

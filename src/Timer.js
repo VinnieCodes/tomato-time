@@ -256,7 +256,7 @@ function Timer() {
       setTotalFocusMinutes(0);
       localStorage.setItem("totalFocusMinutes", 0);
       setTimeout(() => setResetAnim(false), 600); // animation duration after reset
-    }, 2000); // 2 seconds hold
+    }, 1000); // 1 seconds hold
   }
 
   function handleFocusTimeMouseUp() {
@@ -277,7 +277,7 @@ function Timer() {
           zIndex: 10,
           background: "transparent",
           padding: "2px 4px",
-          transition: "color 1.5s",
+          transition: "color 0.5s",
           cursor: "pointer",
           userSelect: "none",
         }}

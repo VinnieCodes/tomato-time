@@ -3,7 +3,7 @@ import "react-circular-progressbar/dist/styles.css";
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import SettingsContext from "./SettingsContext";
 import {
   workCompleteSound,
@@ -28,7 +28,6 @@ function Timer() {
     const stored = localStorage.getItem("totalFocusMinutes");
     return stored ? parseInt(stored, 10) : 0;
   });
-  const [lastPausedSeconds, setLastPausedSeconds] = useState(null);
   const [resetAnim, setResetAnim] = useState(false);
 
   const secondsLeftRef = useRef(secondsLeft);
@@ -37,7 +36,7 @@ function Timer() {
   const pomoCountRef = useRef(pomoCount);
   const holdTimeout = useRef(null);
 
-  function switchMode() {
+  const switchMode = useCallback(() => {
     if (modeRef.current === "work") {
       const nextPomoCount = pomoCountRef.current + 1;
       if (nextPomoCount % 4 === 0) {
@@ -69,28 +68,25 @@ function Timer() {
       secondsLeftRef.current = settingsInfo.workMinutes * 60;
     }
     setWaitingForAdvance(false); // reset waiting state on mode switch
-  }
+  }, [
+    settingsInfo.breakMinutes,
+    settingsInfo.longBreakMinutes,
+    settingsInfo.workMinutes,
+  ]);
 
   function tick() {
     secondsLeftRef.current--;
     setSecondsLeft(secondsLeftRef.current);
   }
 
-  function initTimer() {
+  const initTimer = useCallback(() => {
     setMode("work");
     modeRef.current = "work";
     setSecondsLeft(settingsInfo.workMinutes * 60);
     secondsLeftRef.current = settingsInfo.workMinutes * 60;
     setPomoCount(0);
     pomoCountRef.current = 0;
-  }
-
-  function handleNext() {
-    switchMode();
-    setIsPaused(false);
-    isPausedRef.current = false;
-    setWaitingForAdvance(false);
-  }
+  }, [settingsInfo.workMinutes]);
 
   function handleManualAdvance() {
     switchMode();
@@ -126,7 +122,7 @@ function Timer() {
     }, 50);
 
     return () => clearInterval(interval);
-  }, [settingsInfo]);
+  }, [settingsInfo, switchMode, initTimer]);
 
   const totalSeconds =
     mode === "work"

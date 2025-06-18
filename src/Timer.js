@@ -12,6 +12,7 @@ import {
 } from "./SoundEffects";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
+import TotalFocus from "./TotalFocus";
 
 const blue = "#4772fa";
 const green = "#1bddac";
@@ -24,17 +25,11 @@ function Timer() {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [pomoCount, setPomoCount] = useState(0); // Track completed work sessions
   const [waitingForAdvance, setWaitingForAdvance] = useState(false);
-  const [totalFocusMinutes, setTotalFocusMinutes] = useState(() => {
-    const stored = localStorage.getItem("totalFocusMinutes");
-    return stored ? parseInt(stored, 10) : 0;
-  });
-  const [resetAnim, setResetAnim] = useState(false);
 
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
   const pomoCountRef = useRef(pomoCount);
-  const holdTimeout = useRef(null);
 
   const switchMode = useCallback(() => {
     if (modeRef.current === "work") {
@@ -217,73 +212,13 @@ function Timer() {
     });
   }
 
-  // Track last minute mark for focus update
-  const [lastFocusMinute, setLastFocusMinute] = useState(null);
-
-  useEffect(() => {
-    // Only update in work mode, not paused, and not waiting for advance
-    if (mode === "work" && !isPaused && !waitingForAdvance) {
-      const currentMinute = Math.floor(
-        (settingsInfo.workMinutes * 60 - secondsLeft) / 60
-      );
-      if (lastFocusMinute === null) {
-        setLastFocusMinute(currentMinute);
-      } else if (currentMinute > lastFocusMinute) {
-        const minutesToAdd = currentMinute - lastFocusMinute;
-        if (minutesToAdd > 0) {
-          const newTotal = totalFocusMinutes + minutesToAdd;
-          setTotalFocusMinutes(newTotal);
-          localStorage.setItem("totalFocusMinutes", newTotal);
-          setLastFocusMinute(currentMinute);
-        }
-      }
-    }
-    // Reset lastFocusMinute when mode changes or timer is paused
-    if (isPaused || mode !== "work" || waitingForAdvance) {
-      setLastFocusMinute(null);
-    }
-    // eslint-disable-next-line
-  }, [secondsLeft, isPaused, mode, waitingForAdvance]);
-
-  // Reset total focus time with hold
-  function handleFocusTimeMouseDown() {
-    setResetAnim(true); // Start animation immediately on mouse down
-    holdTimeout.current = setTimeout(() => {
-      setTotalFocusMinutes(0);
-      localStorage.setItem("totalFocusMinutes", 0);
-      setTimeout(() => setResetAnim(false), 600); // animation duration after reset
-    }, 1000); // 1 seconds hold
-  }
-
-  function handleFocusTimeMouseUp() {
-    clearTimeout(holdTimeout.current);
-    setResetAnim(false); // Cancel animation if released early
-  }
-
   return (
     <div>
-      <div
-        style={{
-          position: "absolute",
-          top: 1,
-          left: 1,
-          color: resetAnim ? "#d32f2f" : "#fff",
-          fontWeight: "bold",
-          fontSize: "1em",
-          zIndex: 10,
-          background: "transparent",
-          padding: "2px 4px",
-          transition: "color 0.5s",
-          cursor: "pointer",
-          userSelect: "none",
-        }}
-        onMouseDown={handleFocusTimeMouseDown}
-        onMouseUp={handleFocusTimeMouseUp}
-        onMouseLeave={handleFocusTimeMouseUp}
-        title="Hold to reset"
-      >
-        Total Focus Time: {totalFocusMinutes} minutes
-      </div>
+      <TotalFocus
+        workActive={mode === "work" ? settingsInfo.workMinutes : null}
+        workSecondsLeft={mode === "work" ? secondsLeft : 0}
+        waitingForAdvance={waitingForAdvance}
+      />
       <CircularProgressbar
         value={percentage}
         text={minutes + ":" + seconds}

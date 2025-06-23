@@ -13,6 +13,7 @@ import {
 import TaskForm from "./TaskForm";
 import Task from "./Task";
 import TotalFocus from "./TotalFocus";
+import Statistics from "./Statistics";
 
 const blue = "#4772fa";
 const green = "#1bddac";
@@ -72,6 +73,21 @@ function Timer() {
   function tick() {
     secondsLeftRef.current--;
     setSecondsLeft(secondsLeftRef.current);
+
+    if (modeRef.current === "work") {
+      const todayKey = new Date().toISOString().slice(0, 10);
+      const focusData = JSON.parse(localStorage.getItem("focusData") || "{}");
+
+      focusData[todayKey] = (focusData[todayKey] || 0) + 1; // +1 second
+      localStorage.setItem("focusData", JSON.stringify(focusData));
+
+      // Optional: update totalFocusMinutes too if you use it elsewhere
+      const totalFocus = parseInt(
+        localStorage.getItem("totalFocusMinutes") || "0",
+        10
+      );
+      localStorage.setItem("totalFocusMinutes", (totalFocus + 1).toString());
+    }
   }
 
   const initTimer = useCallback(() => {
@@ -115,7 +131,6 @@ function Timer() {
       }
       tick();
     }, 50);
-
     return () => clearInterval(interval);
   }, [settingsInfo, switchMode, initTimer]);
 
@@ -214,6 +229,7 @@ function Timer() {
 
   return (
     <div>
+      <Statistics></Statistics>
       <TotalFocus
         workActive={mode === "work" ? settingsInfo.workMinutes : null}
         workSecondsLeft={mode === "work" ? secondsLeft : 0}

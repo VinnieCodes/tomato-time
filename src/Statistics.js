@@ -66,15 +66,15 @@ export default class Example extends PureComponent {
 
   render() {
     return (
-      <div style={{ width: 500, height: 500 }}>
+      <div style={{ width: 'auto', height: 400 }}>
         <p>Focus Time for the Last 7 Days:</p>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={this.state.data}
-            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+            margin={{ top: 5, right: 45, left: 5, bottom: 5 }}
           >
             <XAxis dataKey="name" />
-            <YAxis
+            <YAxis label={{ value: "Minutes", angle: -90, position: "outsideLeft" }}
             />
 
             <Tooltip

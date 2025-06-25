@@ -260,7 +260,7 @@ function Timer() {
               maxWidth: "600px",
               backgroundColor: "rgba(36, 36, 36, 0.96)",
               padding: "10px 0px 50px 10px",
-              borderRadius: "8px",
+              borderRadius: "20px",
               position: "relative",
             }}
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside modal

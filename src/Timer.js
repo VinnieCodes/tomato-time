@@ -28,7 +28,6 @@ function Timer() {
   const [waitingForAdvance, setWaitingForAdvance] = useState(false);
   const [showChart, setShowChart] = useState(false);
 
-
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
@@ -232,10 +231,17 @@ function Timer() {
   return (
     <div>
       <button
-        style={{ margin: "20px", padding: "10px 20px" }}
+        style={{
+          padding: "4px",
+          width: "auto",
+          position: "absolute",
+          fontSize: "1em",
+          top: 2,
+          right: 2,
+        }}
         onClick={() => setShowChart(true)}
       >
-        Show Chart
+        Stats
       </button>
       {showChart && (
         <div

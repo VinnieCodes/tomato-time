@@ -60,27 +60,29 @@ function TotalFocus({ workActive, workSecondsLeft, waitingForAdvance }) {
   }
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: 1,
-        left: 1,
-        color: resetAnim ? "#d32f2f" : "#fff",
-        fontWeight: "bold",
-        fontSize: "1em",
-        zIndex: 10,
-        background: "transparent",
-        padding: "2px 4px",
-        transition: "color 0.5s",
-        cursor: "pointer",
-        userSelect: "none",
-      }}
-      onMouseDown={handleFocusTimeMouseDown}
-      onMouseUp={handleFocusTimeMouseUp}
-      onMouseLeave={handleFocusTimeMouseUp}
-      title="Hold to reset"
-    >
-      Total Focus Time: {totalFocusMinutes} minutes
+    <div>
+      <button
+        style={{
+          position: "absolute",
+          top: 2,
+          left: 2,
+          width: "auto",
+          color: resetAnim ? "#d32f2f" : "#ccc",
+          fontSize: "1em",
+          zIndex: 10,
+          background: "transparent",
+          padding: "4px",
+          transition: "color 0.5s",
+          cursor: "pointer",
+          userSelect: "none",
+        }}
+        onMouseDown={handleFocusTimeMouseDown}
+        onMouseUp={handleFocusTimeMouseUp}
+        onMouseLeave={handleFocusTimeMouseUp}
+        title="Hold to reset"
+      >
+        Total Focus Time: {totalFocusMinutes} minutes
+      </button>
     </div>
   );
 }

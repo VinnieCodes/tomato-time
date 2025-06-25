@@ -75,7 +75,12 @@ export default class Example extends PureComponent {
           >
             <XAxis dataKey="name" />
             <YAxis
-              label={{ value: "Minutes", angle: -90, position: "outsideLeft" }}
+              label={{
+                value: "Minutes",
+                angle: -90,
+                position: "outsideLeft",
+                dx: -15,
+              }}
             />
 
             <Tooltip

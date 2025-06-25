@@ -245,30 +245,11 @@ function Timer() {
       </button>
       {showChart && (
         <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
+          className="modal-backdrop"
           onClick={() => setShowChart(false)} // close on background click
         >
           <div
-            style={{
-              width: "90%",
-              minWidth: "500px",
-              maxWidth: "600px",
-              backgroundColor: "rgba(36, 36, 36, 0.96)",
-              padding: "10px 0px 50px 10px",
-              borderRadius: "20px",
-              position: "relative",
-            }}
+            className="modal-content"
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside modal
           >
             <Statistics /> {/* your chart component */}

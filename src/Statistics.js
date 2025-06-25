@@ -66,7 +66,7 @@ export default class Example extends PureComponent {
 
   render() {
     return (
-      <div style={{ width: 'auto', height: 400 }}>
+      <div style={{ width: "auto", height: 400 }}>
         <p>Focus Time for the Last 7 Days:</p>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -74,7 +74,8 @@ export default class Example extends PureComponent {
             margin={{ top: 5, right: 45, left: 5, bottom: 5 }}
           >
             <XAxis dataKey="name" />
-            <YAxis label={{ value: "Minutes", angle: -90, position: "outsideLeft" }}
+            <YAxis
+              label={{ value: "Minutes", angle: -90, position: "outsideLeft" }}
             />
 
             <Tooltip

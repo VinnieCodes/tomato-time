@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import useState, { PureComponent } from "react";
 import {
   BarChart,
   Bar,
@@ -71,16 +71,22 @@ export default class Example extends PureComponent {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={this.state.data}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis
-              label={{ value: "Minutes", angle: -90, position: "insideLeft" }}
             />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Bar dataKey="FocusTime" barSize={20} fill="#8884d8" />
+
+            <Tooltip
+              cursor={{ fill: "rgba(255, 255, 255, 0.03)" }}
+              content={<CustomTooltip />}
+            />
+            <Bar
+              dataKey="FocusTime"
+              barSize={40}
+              fill="#4772fa"
+              radius={[4, 4, 4, 4]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -1,12 +1,10 @@
-import useState, { PureComponent } from "react";
+import { PureComponent } from "react";
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -14,12 +12,16 @@ function getLast7Days() {
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const days = [];
 
+  const today = new Date().toISOString().slice(0, 10);
+
   for (let i = 6; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
+    const dateKey = d.toISOString().slice(0, 10);
+    const isToday = dateKey === today;
     days.push({
-      dayName: dayNames[d.getDay()],
-      dateKey: d.toISOString().slice(0, 10), // YYYY-MM-DD (use as key)
+      dayName: isToday ? 'Now' : dayNames[d.getDay()],
+      dateKey,
     });
   }
   return days;

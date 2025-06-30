@@ -16,8 +16,9 @@ function Settings() {
         trackClassName={"track"}
         value={settingsInfo.workMinutes}
         onChange={(newValue) => settingsInfo.setWorkMinutes(newValue)}
-        min={1}
-        max={120}
+        min={25}
+        max={75}
+        step={5}
       />
       <label>Break: {settingsInfo.breakMinutes} Minutes</label>
       <ReactSlider
@@ -26,8 +27,8 @@ function Settings() {
         trackClassName={"track"}
         value={settingsInfo.breakMinutes}
         onChange={(newValue) => settingsInfo.setBreakMinutes(newValue)}
-        min={1}
-        max={25}
+        min={5}
+        max={15}
       />
       <label>Long Break: {settingsInfo.longBreakMinutes} Minutes</label>
       <ReactSlider
@@ -36,8 +37,9 @@ function Settings() {
         trackClassName={"track"}
         value={settingsInfo.longBreakMinutes}
         onChange={(newValue) => settingsInfo.setLongBreakMinutes(newValue)}
-        min={3}
-        max={100}
+        min={15}
+        max={45}
+        step={3}
       />
 
       <div style={{ margin: "20px 0" }}>

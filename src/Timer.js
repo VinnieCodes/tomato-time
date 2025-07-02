@@ -302,7 +302,7 @@ function Timer() {
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
       </div>
-      <div>
+      <div style={{marginBottom: "30px"}}>
         <h1>
           {numberComplete}/{numberTotal} Complete
         </h1>

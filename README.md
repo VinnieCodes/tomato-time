@@ -1,70 +1,54 @@
-# Getting Started with Create React App This project is not finished
+# 🍅 Tomato Time
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple and well-built Pomodoro timer to help you stay focused and productive.
 
-## Available Scripts
+[Tomato Time Live Site 🍅](https://tomato-time1.netlify.app/)
 
-In the project directory, you can run:
+<img src="public/preview.png" width="500" alt="Screenshot of Tomato Time">
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🧠 Motivation
+I always use a Pomodoro timer when I'm grinding through programming sessions. It helps me avoid burnout and maintain a high volume of productive focus time. Tomato Time was built to provide a customizable, intuitive timer with just enough features to stay on track—without getting in the way.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## ✨ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- ⏱ Pomodoro sessions (25 minutes)
 
-### `npm run build`
+- ☕ Short (5 min) and long breaks (15 min)
+- 🔄 Auto-cycle or manual control
+- 📃 Built-in To-Do List with total completed count and motivational messages
+- ⚙️ Customizable session lengths in Settings
+- 🔔 Simple sound effects for transitions
+- ⏳ Timer animation for visual progress
+- 🚦 Browser tab title updates based on session
+- 📊 Focus statistics tracking the past 7 days
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Technologies Used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React (with Hooks)
 
-### `npm run eject`
+- JavaScript (ES6+)
+- HTML5 + CSS3
+- NPM packages
+- LocalStorage for persistence
+- Netlify for deployment
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📦 Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To run Tomato Time locally:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+# Clone the repo
+git clone https://github.com/VinnieCodes/tomato-time.git
 
-## Learn More
+# Navigate into the project directory
+cd tomato-time
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Install dependencies
+npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Start the development server
+npm start

@@ -1,7 +1,7 @@
 import "./App.css";
 import Timer from "./Timer";
 import Settings from "./Settings";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import SettingsContext, { SettingsProvider } from "./SettingsContext";
 
 function AppContent() {
@@ -16,7 +16,6 @@ function AppContent() {
     setMode,
     pomoCount,
     setPomoCount,
-    setShowSettings,
   } = settingsInfo;
 
   let minutes;

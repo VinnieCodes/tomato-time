@@ -131,7 +131,7 @@ function Timer() {
         return switchMode();
       }
       tick();
-    }, 50);
+    }, 1000);
     return () => clearInterval(interval);
   }, [settingsInfo, switchMode, initTimer]);
 
